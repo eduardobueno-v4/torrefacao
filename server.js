@@ -33,23 +33,28 @@ const server = http.createServer((req, res) => {
   // Redireciona / para index.html
   if (urlPath === '/' || urlPath === '') urlPath = '/index.html';
 
+  // Se a URL termina com /, procura index.html dentro da pasta
+  if (urlPath.endsWith('/')) urlPath += 'index.html';
+
+  // Se a URL não tem extensão, pode ser um diretório — tenta /index.html
+  const ext = path.extname(urlPath).toLowerCase();
+  if (!ext) {
+    const dirIndex = path.join(ROOT, urlPath, 'index.html');
+    if (fs.existsSync(dirIndex)) {
+      res.writeHead(302, { 'Location': urlPath + '/' });
+      res.end();
+      return;
+    }
+  }
+
   const filePath = path.join(ROOT, urlPath);
-  const ext      = path.extname(filePath).toLowerCase();
   const mimeType = MIME[ext] || 'application/octet-stream';
 
   fs.readFile(filePath, (err, data) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        // 404 — tenta servir index.html (SPA fallback)
-        fs.readFile(path.join(ROOT, 'index.html'), (e2, html) => {
-          if (e2) {
-            res.writeHead(500);
-            res.end('Erro interno do servidor.');
-          } else {
-            res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-            res.end(html);
-          }
-        });
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end('<h1>404 — Página não encontrada</h1><p><a href="/">Voltar ao início</a></p>');
       } else {
         res.writeHead(500);
         res.end('Erro interno: ' + err.message);
@@ -67,6 +72,7 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log('\n☕  B2B Coffee Insights — Servidor local iniciado!');
-  console.log(`   Acesse: \x1b[36mhttp://localhost:${PORT}\x1b[0m\n`);
+  console.log(`   Acesse: \x1b[36mhttp://localhost:${PORT}\x1b[0m`);
+  console.log(`   Landing Page: \x1b[36mhttp://localhost:${PORT}/landing/\x1b[0m\n`);
   console.log('   Pressione Ctrl+C para encerrar.\n');
 });

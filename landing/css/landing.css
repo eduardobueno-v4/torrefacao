@@ -1,0 +1,110 @@
+/* =============================================================
+   CAFÉCORP Landing Page — Estilos Complementares
+   ============================================================= */
+
+/* ── Animações de Entrada ────────────────────────────────── */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.hero-fade-in {
+  animation: fadeInLeft 0.8s ease both;
+}
+
+.hero-zoom-in {
+  animation: zoomIn 1s ease 0.2s both;
+}
+
+.float-badge {
+  animation: floatBounce 3s ease-in-out infinite;
+}
+
+/* ── Nav scrolled state (aplicado via JS) ────────────────── */
+.nav-scrolled {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* ── Range slider customizado (escuro) ───────────────────── */
+.calc-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+
+.calc-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #C19A6B;
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.calc-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.calc-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #C19A6B;
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FDFCFB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C19A6B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8D6E63;
+}
+
+/* ── Smooth transitions gerais ───────────────────────────── */
+a, button {
+  transition: all 0.25s ease;
+}
+
+/* ── Package mockup glow ─────────────────────────────────── */
+.package-mockup {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.package-mockup:hover {
+  box-shadow: 0 25px 50px rgba(193, 154, 107, 0.25);
+}
