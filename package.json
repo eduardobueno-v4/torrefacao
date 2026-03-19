@@ -1,0 +1,16 @@
+{
+  "name": "b2b-coffee-insights",
+  "version": "1.0.0",
+  "description": "Dashboard interativo de análise do mercado de Torrefação B2B e Café White Label",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["cafe", "b2b", "white-label", "dashboard", "torrefacao"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

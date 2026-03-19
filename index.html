@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard interativo sobre o mercado de Torrefação B2B e Café White Label — análise de crescimento, processo e calculadora de engajamento corporativo.">
+    <meta name="theme-color" content="#2C1E16">
+    <title>Análise de Mercado: Torrefação B2B e Café White Label</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Estilos externos -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Configuração do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            900: '#2C1E16',
+                            800: '#4A3525',
+                            600: '#8D6E63',
+                            400: '#C19A6B',
+                            100: '#EFEBE4',
+                            50:  '#F9F6F0'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed w-full z-50 glass-panel shadow-sm top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2 font-bold text-xl text-coffee-900">
+                    <span class="text-2xl">☕</span> B2B Coffee Insights
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#mercado" class="text-coffee-800 hover:text-coffee-400 transition-colors">O Mercado</a>
+                    <a href="#processo" class="text-coffee-800 hover:text-coffee-400 transition-colors">O Processo</a>
+                    <a href="#impacto" class="text-coffee-800 hover:text-coffee-400 transition-colors">Calculadora de Impacto</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-16">
+        <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-coffee-900 tracking-tight mb-6">
+                A Revolução do Café <span class="text-transparent bg-clip-text bg-gradient-to-r from-coffee-600 to-coffee-400">White Label</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-coffee-600">
+                Uma análise aprofundada sobre como torrefadoras estão transformando grãos especiais em poderosas ferramentas de branding corporativo e retenção de talentos através de embalagens personalizadas.
+            </p>
+        </header>
+
+        <section id="mercado" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 scroll-mt-24">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-coffee-900 mb-4">Panorama do Mercado</h2>
+                <p class="text-lg text-coffee-800">
+                    Nesta seção, exploramos o crescimento exponencial da demanda por cafés personalizados no ambiente corporativo. O mercado tradicional de brindes está sendo substituído por experiências sensoriais de alta qualidade. Observe nos gráficos abaixo a trajetória de crescimento do setor e os principais motivos que levam empresas a adotarem soluções como a da @meucaffe.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-coffee-100">
+                    <h3 class="text-xl font-bold text-coffee-900 mb-2">Crescimento do Setor B2B (M Milhões R$)</h3>
+                    <p class="text-sm text-coffee-600 mb-6">Volume de negócios de cafés especiais destinados exclusivamente a brindes e consumo corporativo customizado nos últimos 5 anos.</p>
+                    <div class="chart-container">
+                        <canvas id="marketGrowthChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-coffee-100">
+                    <h3 class="text-xl font-bold text-coffee-900 mb-2">Motivações de Compra das Empresas</h3>
+                    <p class="text-sm text-coffee-600 mb-6">Principais objetivos estratégicos relatados por departamentos de RH e Marketing ao contratar uma torrefadora white label.</p>
+                    <div class="chart-container">
+                        <canvas id="motivationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="processo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 scroll-mt-24">
+            <div class="mb-12 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-coffee-900 mb-4">Como Funciona a Operação</h2>
+                <p class="text-lg text-coffee-800">
+                    Entenda a jornada do grão até se tornar um embaixador da sua marca. Clique nas etapas abaixo para descobrir como torrefadoras especializadas gerenciam toda a cadeia produtiva, garantindo um produto final que reflete a identidade da empresa cliente.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <button onclick="changeProcess(1)" id="btn-proc-1" class="step-card active w-full p-4 rounded-xl border border-coffee-400 text-left transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div class="text-2xl mb-2">🌱</div>
+                    <h4 class="font-bold text-lg">1. Curadoria</h4>
+                </button>
+                <button onclick="changeProcess(2)" id="btn-proc-2" class="step-card bg-white text-coffee-900 w-full p-4 rounded-xl border border-coffee-100 text-left transition-all duration-300 shadow-sm hover:border-coffee-400 hover:shadow-md">
+                    <div class="text-2xl mb-2">🔥</div>
+                    <h4 class="font-bold text-lg">2. Torra</h4>
+                </button>
+                <button onclick="changeProcess(3)" id="btn-proc-3" class="step-card bg-white text-coffee-900 w-full p-4 rounded-xl border border-coffee-100 text-left transition-all duration-300 shadow-sm hover:border-coffee-400 hover:shadow-md">
+                    <div class="text-2xl mb-2">🎨</div>
+                    <h4 class="font-bold text-lg">3. Personalização</h4>
+                </button>
+                <button onclick="changeProcess(4)" id="btn-proc-4" class="step-card bg-white text-coffee-900 w-full p-4 rounded-xl border border-coffee-100 text-left transition-all duration-300 shadow-sm hover:border-coffee-400 hover:shadow-md">
+                    <div class="text-2xl mb-2">📦</div>
+                    <h4 class="font-bold text-lg">4. Logística</h4>
+                </button>
+            </div>
+
+            <div class="bg-coffee-900 text-coffee-50 p-8 rounded-2xl min-h-[200px] flex items-center shadow-lg transition-all duration-500">
+                <div id="process-content" class="max-w-4xl">
+                    <h3 class="text-2xl font-bold mb-4 text-coffee-400">Seleção de Grãos Especiais (80+ pontos BSCA)</h3>
+                    <p class="text-lg leading-relaxed text-coffee-100">
+                        O processo começa com a escolha criteriosa de lotes de café de pequenos produtores. As torrefadoras parceiras buscam perfis sensoriais específicos (chocolate, frutado, floral) que combinem com a mensagem que a empresa cliente deseja transmitir. A qualidade da matéria-prima é inegociável para garantir a percepção de alto valor do brinde.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="impacto" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24 scroll-mt-24">
+            <div class="bg-white rounded-3xl shadow-md border border-coffee-100 overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-8 lg:p-12 bg-coffee-50">
+                        <h2 class="text-3xl font-bold text-coffee-900 mb-4">Calculadora de Engajamento Corporativo</h2>
+                        <p class="text-coffee-800 mb-8">
+                            Ajuste os controles abaixo para simular o impacto de investir em cafés personalizados para sua equipe ou clientes. Veja como uma pequena mudança no orçamento de brindes pode gerar um alto retorno em percepção de valor e fidelização.
+                        </p>
+
+                        <div class="mb-8">
+                            <label class="block text-sm font-bold text-coffee-900 mb-2">Público-Alvo (Funcionários/Clientes)</label>
+                            <input type="range" id="audience-slider" min="50" max="1000" step="50" value="200" class="w-full h-2 bg-coffee-100 rounded-lg appearance-none cursor-pointer accent-coffee-600">
+                            <div class="flex justify-between text-sm text-coffee-600 mt-2 font-medium">
+                                <span>50</span>
+                                <span id="audience-val" class="text-coffee-900 font-bold text-lg">200 pessoas</span>
+                                <span>1000</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-sm font-bold text-coffee-900 mb-2">Frequência (Entregas por ano)</label>
+                            <input type="range" id="freq-slider" min="1" max="12" step="1" value="4" class="w-full h-2 bg-coffee-100 rounded-lg appearance-none cursor-pointer accent-coffee-600">
+                            <div class="flex justify-between text-sm text-coffee-600 mt-2 font-medium">
+                                <span>1x</span>
+                                <span id="freq-val" class="text-coffee-900 font-bold text-lg">4x ao ano</span>
+                                <span>Mensal (12x)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-8 lg:p-12 flex flex-col justify-center items-center text-center bg-coffee-900 text-coffee-50 relative overflow-hidden">
+                        <div class="absolute opacity-10 text-9xl -right-10 -bottom-10">📈</div>
+                        <div class="relative z-10 w-full">
+                            <h3 class="text-xl font-medium text-coffee-400 mb-2">Impacto Estimado Anual</h3>
+                            
+                            <div class="grid grid-cols-2 gap-6 mt-8">
+                                <div class="bg-white/10 p-6 rounded-xl border border-white/20 backdrop-blur-sm">
+                                    <div class="text-4xl font-bold mb-2 text-white" id="calc-impact-score">92%</div>
+                                    <div class="text-sm text-coffee-100">Aumento na Percepção de Valor da Marca</div>
+                                </div>
+                                <div class="bg-white/10 p-6 rounded-xl border border-white/20 backdrop-blur-sm">
+                                    <div class="text-4xl font-bold mb-2 text-white" id="calc-packages">800</div>
+                                    <div class="text-sm text-coffee-100">Pacotes com a sua Logomarca circulando</div>
+                                </div>
+                            </div>
+
+                            <p class="mt-8 text-sm text-coffee-100 bg-white/5 p-4 rounded-lg">
+                                💡 <strong class="text-coffee-400">Insight Analítico:</strong> Entregar cafés de alta qualidade repetidamente gera um viés de reciprocidade maior do que brindes genéricos (como canetas ou cadernos), transformando um item de consumo diário em um lembrete constante da sua marca.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-coffee-900 py-12 border-t border-coffee-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl font-bold text-coffee-50 mb-4">O Futuro do Brinde Corporativo</h2>
+            <p class="max-w-2xl mx-auto text-coffee-100 mb-8">
+                Empresas inovadoras e referências no mercado, semelhantes à operação da @meucaffe, provam que a personalização atrelada à alta qualidade gastronômica é o caminho para conexões B2B autênticas.
+            </p>
+            <div class="text-sm text-coffee-400">
+                Criado para exploração de dados do mercado de Torrefação B2B. SPA Interativo.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript externo -->
+    <script src="js/main.js"></script>
+</body>
+</html>
