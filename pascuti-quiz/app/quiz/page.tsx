@@ -20,6 +20,7 @@ const perguntas = [
 export default function QuizContainer() {
   const [isMounted, setIsMounted] = useState(false);
   const variant = useQuizStore((state) => state.variant);
+  const forceVariant = useQuizStore((state) => state.forceVariant);
 
   useEffect(() => {
     setIsMounted(true);
@@ -27,7 +28,17 @@ export default function QuizContainer() {
 
   if (!isMounted) return <div className="min-h-screen bg-pascuti-offWhite"></div>;
 
-  return variant === 'B' ? <VariantB /> : <VariantA />;
+  return (
+    <>
+      {/* Dev Tool: A/B Test Toggle */}
+      <div className="fixed top-4 right-4 z-50 bg-white/70 backdrop-blur-md p-1.5 rounded-full shadow-xl shadow-black/5 border border-white/50 flex flex-col sm:flex-row items-center gap-1.5 transition-all w-fit">
+        <button onClick={() => forceVariant('A')} className={`px-4 py-2 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all ${variant === 'A' ? 'bg-pascuti-navyBlue text-white shadow-md' : 'text-gray-400 hover:text-pascuti-black hover:bg-white/80'}`}>A</button>
+        <button onClick={() => forceVariant('B')} className={`px-4 py-2 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all ${variant === 'B' ? 'bg-gradient-to-tr from-[#D4712A] to-orange-400 text-white shadow-md' : 'text-gray-400 hover:text-[#D4712A] hover:bg-white/80'}`}>B</button>
+      </div>
+
+      {variant === 'B' ? <VariantB /> : <VariantA />}
+    </>
+  );
 }
 
 // ----------------------------------------------------

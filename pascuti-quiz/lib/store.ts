@@ -11,6 +11,7 @@ interface QuizStore {
   setLead: (lead: Partial<Lead>) => void;
   setQuizAnswer: (answer: Partial<QuizAnswer>) => void;
   assignVariant: () => void;
+  forceVariant: (v: ABVariant) => void;
   reset: () => void;
 }
 
@@ -26,6 +27,7 @@ export const useQuizStore = create<QuizStore>()(
           set({ variant: randomVariant });
         }
       },
+      forceVariant: (v: ABVariant) => set({ variant: v }),
       setLead: (lead) => set((state) => ({ lead: { ...state.lead, ...lead } })),
       setQuizAnswer: (answer) => set((state) => ({ quizAnswer: { ...state.quizAnswer, ...answer } })),
       reset: () => set((state) => ({ lead: {}, quizAnswer: {}, variant: state.variant })), // keep variant on reset
