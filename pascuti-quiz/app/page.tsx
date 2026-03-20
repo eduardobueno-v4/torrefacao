@@ -1,12 +1,20 @@
 "use client";
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Playfair_Display } from "next/font/google";
+import { useQuizStore } from '@/lib/store';
 
 const playfair = Playfair_Display({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
+  const assignVariant = useQuizStore((state) => state.assignVariant);
+
+  useEffect(() => {
+    // Garantir que um grupo A/B foi selecionado logo ao entrar no painel
+    assignVariant();
+  }, [assignVariant]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pascuti-black to-gray-900 text-pascuti-offWhite flex flex-col justify-center items-center px-6 py-12 text-center">
