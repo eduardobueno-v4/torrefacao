@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-pascuti-offWhite text-pascuti-black;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Custom premium mobile range slider */
+input[type='range'] {
+  -webkit-appearance: none;
+  @apply w-full h-3 bg-gray-200 rounded-full outline-none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  @apply w-8 h-8 rounded-full bg-pascuti-orangeDiamond cursor-pointer shadow-md shadow-orange-500/30 border-2 border-white;
+}
+
+input[type='range']::-moz-range-thumb {
+  @apply w-8 h-8 rounded-full bg-pascuti-orangeDiamond cursor-pointer shadow-md shadow-orange-500/30 border-2 border-white;
+}
