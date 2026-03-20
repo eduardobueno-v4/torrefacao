@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuizStore, ABVariant } from '@/lib/store';
+import { useQuizStore } from '@/lib/store';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const descritoresSabor = ['Chocolate', 'Caramelo', 'Frutas Vermelhas', 'Cítrico', 'Nozes', 'Cereal', 'Floral', 'Especiarias', 'Torrado', 'Outro'];

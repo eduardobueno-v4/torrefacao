@@ -1,11 +1,9 @@
 "use client";
 import { useQuizStore } from '@/lib/store';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 
 export default function Sorteio() {
-  const router = useRouter();
   const lead = useQuizStore((state) => state.lead);
 
   const shareHandler = async () => {

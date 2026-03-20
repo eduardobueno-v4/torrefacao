@@ -64,7 +64,7 @@ export default function Degustacao() {
               
               <div className="mt-2 mb-8">
                 <p className="text-gray-700 text-lg leading-relaxed font-light">
-                  "{dica}"
+                  &quot;{dica}&quot;
                 </p>
               </div>
 

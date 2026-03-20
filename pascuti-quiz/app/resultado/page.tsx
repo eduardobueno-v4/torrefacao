@@ -5,13 +5,13 @@ import { useQuizStore } from '@/lib/store';
 import { calculateScore } from '@/lib/scoring';
 import { PASCUTI_CONSTANTS } from '@/lib/constants';
 import { QuizAnswer, ScoreResult } from '@/lib/types';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { motion } from 'framer-motion';
 
 export default function Resultado() {
   const router = useRouter();
   const { quizAnswer, lead } = useQuizStore();
-  const [result, setResult] = useState<ScoreResult | null>(null);
+  const [result, setResult] = useState<{res: ScoreResult, ficha: typeof PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA} | null>(null);
 
   useEffect(() => {
     if (!quizAnswer.sabor || !lead.nome) {
@@ -19,18 +19,24 @@ export default function Resultado() {
       return;
     }
 
-    const res = calculateScore(quizAnswer as QuizAnswer, PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA);
-    setResult(res);
+    let currentFicha = PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA;
+    const localFicha = localStorage.getItem('pascuti_ficha_tecnica');
+    if (localFicha) {
+      try { currentFicha = JSON.parse(localFicha); } catch {}
+    }
+
+    const res = calculateScore(quizAnswer as QuizAnswer, currentFicha);
+    setResult({ res, ficha: currentFicha });
   }, [quizAnswer, lead, router]);
 
   if (!result) return <div className="min-h-screen bg-pascuti-offWhite flex items-center justify-center">Calculando...</div>;
 
   const chartData = [
-    { subject: 'Sabor', A: quizAnswer.sabor?.intensidade ?? 0, B: PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA.sabor.intensidade, fullMark: 10 },
-    { subject: 'Doçura', A: quizAnswer.docura?.intensidade ?? 0, B: PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA.docura.intensidade, fullMark: 10 },
-    { subject: 'Acidez', A: quizAnswer.acidez?.intensidade ?? 0, B: PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA.acidez.intensidade, fullMark: 10 },
-    { subject: 'Corpo', A: quizAnswer.sensacaoNaBoca?.intensidade ?? 0, B: PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA.sensacaoNaBoca.intensidade, fullMark: 10 },
-    { subject: 'Retrogosto', A: quizAnswer.retrogosto?.intensidade ?? 0, B: PASCUTI_CONSTANTS.PLACEHOLDER_FICHA_TECNICA.retrogosto.intensidade, fullMark: 10 },
+    { subject: 'Sabor', A: quizAnswer.sabor?.intensidade ?? 0, B: result.ficha.sabor.intensidade, fullMark: 10 },
+    { subject: 'Doçura', A: quizAnswer.docura?.intensidade ?? 0, B: result.ficha.docura.intensidade, fullMark: 10 },
+    { subject: 'Acidez', A: quizAnswer.acidez?.intensidade ?? 0, B: result.ficha.acidez.intensidade, fullMark: 10 },
+    { subject: 'Corpo', A: quizAnswer.sensacaoNaBoca?.intensidade ?? 0, B: result.ficha.sensacaoNaBoca.intensidade, fullMark: 10 },
+    { subject: 'Retrogosto', A: quizAnswer.retrogosto?.intensidade ?? 0, B: result.ficha.retrogosto.intensidade, fullMark: 10 },
   ];
 
   return (
@@ -47,9 +53,9 @@ export default function Resultado() {
           initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
         >
           <p className="text-gray-500 uppercase text-xs font-semibold tracking-widest mb-2">Score Geral</p>
-          <h1 className="text-6xl font-bold text-pascuti-orangeDiamond font-playfair mb-2">{result.scoreGeral}</h1>
-          <p className="text-2xl font-playfair text-pascuti-navyBlue">{result.classificacao.nome}</p>
-          <p className="text-sm text-gray-600 text-center mt-4 px-2 line-clamp-3">{result.classificacao.feedback}</p>
+          <h1 className="text-6xl font-bold text-pascuti-orangeDiamond font-playfair mb-2">{result.res.scoreGeral}</h1>
+          <p className="text-2xl font-playfair text-pascuti-navyBlue">{result.res.classificacao.nome}</p>
+          <p className="text-sm text-gray-600 text-center mt-4 px-2 line-clamp-3">{result.res.classificacao.feedback}</p>
         </motion.div>
 
         <motion.div 
